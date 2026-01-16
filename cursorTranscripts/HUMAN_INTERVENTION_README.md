@@ -1,7 +1,12 @@
 # Human Intervention Example Summary
 
 ## Overview
-This document summarizes the changes made during a refactoring session to remove the `GetTemperatureByCoordinates` method from the WeatherPlugin and improve general query handling.
+
+**⚠️ KEY POINT: This scenario demonstrates why human verification is critical even when automated tests pass.**
+
+This document summarizes a refactoring session where the initial request was successfully completed and all tests passed, but **human intervention was required** to identify a critical quality issue that the test framework missed. The test framework validated that the response contained the expected keyword ("Paris") and that the correct tools were called, but it did not catch that the response quality was poor—overly verbose and unnecessarily tool-focused instead of providing a direct, natural answer.
+
+**The Critical Lesson:** Even though the initial task (removing `GetTemperatureByCoordinates` and updating prompts) was solved and all tests passed, a human reviewer had to verify the actual output and identify that the response quality was unsatisfactory. This human finding led to additional improvements that the test framework was then able to validate, demonstrating that basic test frameworks need human oversight to catch issues beyond simple keyword matching and tool call verification.
 
 ## Steps Performed
 
@@ -28,6 +33,19 @@ This document summarizes the changes made during a refactoring session to remove
   - Temperature Query ✓ (now uses `GetWeatherByCoordinates` instead of the removed method)
 
 ### Follow-up Issue: General Knowledge Questions
+
+**⚠️ Human Intervention Required**
+
+While all tests passed initially, human review revealed a critical issue: The response to "What is the capital of France?" did contain "Paris" but the response quality was poor. The system was providing overly verbose, tool-focused explanations instead of a direct, natural answer.
+
+**Why Human Intervention Was Needed:**
+- The test framework is basic and doesn't validate response quality or naturalness
+- Tests only verify that expected tools are called and required keywords appear
+- The framework doesn't catch cases where responses are technically correct but poorly formatted or unnecessarily complex
+- A human had to identify that while "Paris" was present, the overall response was unsatisfactory
+
+**Resolution:**
+Once the issue was identified by human review, the test framework was able to verify the fix. The system prompt was updated to allow direct answers for general knowledge questions, and the improved response was validated through the test suite.
 - **User Request**: General queries (like "What is the capital of France?") should still work without forcing tool usage
 - **Problem Identified**: 
   - The system prompt was too restrictive
