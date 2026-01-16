@@ -1,0 +1,50 @@
+---
+description: "Automatically run IntegrationTesterApp tests when StandardKernel files are modified"
+globs:
+  - "src/StandardKernel/**"
+alwaysApply: true
+---
+
+# Test Verification Rule
+
+When any file in `src/StandardKernel/` is modified:
+
+1. Add tests to verify that the functionality added will work as expected.
+2. Automatically build and run the IntegrationTesterApp to verify all tests pass.
+3. Continue working until tests pass. 
+4. Even if all tests pass YOU MUST: Analyze the outputs, If answers dont make sense or If unexpected plugins are called, make approriate changes.
+
+## Test Execution
+
+Run the IntegrationTesterApp tests using:
+
+```bash
+.\run-tests.ps1
+```
+
+For verbose output with detailed information:
+
+```bash
+.\run-tests.ps1 --verbose
+
+## Requirements
+
+- **Tests must pass** (exit code 0) before considering changes complete
+- If tests fail, execute with the --Verbose tag to see more logs and **fix the issues before proceeding**
+- Test output should show function calls and responses clearly
+- Verify expected tools are called and responses contain required keywords
+
+## What Gets Tested
+
+The IntegrationTesterApp validates:
+- Expected tools are called (e.g., `MathPlugin.Add`)
+- Forbidden tools are NOT called
+- Response contains required keywords
+- Function call logs display correctly with emojis
+
+## Project Structure Reference
+
+- `src/StandardKernel/` - Main demo project (files that trigger this rule)
+- `src/IntegrationTesterApp/` - Test suite that validates StandardKernel behavior
+- `src/Plugins/` - Shared plugins (MathPlugin, etc.)
+- `src/Utilities/` - Shared utilities (QuietConsoleLogger, etc.)
