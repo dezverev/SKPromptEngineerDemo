@@ -1,4 +1,4 @@
-# SKRoutingStyles: Self-Prompt-Engineering Test Framework
+# Self-Prompt-Engineering Test Framework
 
 A Semantic Kernel project demonstrating how automated testing enables AI coding assistants (like GitHub Copilot, Cursor, etc.) to **prompt-engineer themselves** by generating plugins, testing them, and self-correcting based on test failures.
 
